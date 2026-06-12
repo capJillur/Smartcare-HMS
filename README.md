@@ -22,16 +22,6 @@ cd backend
 cp .env.example .env
 ```
 
-Edit `.env`:
-```env
-PORT=5001
-MONGODB_URI=mongodb://localhost:27017/smartcare_hms
-JWT_SECRET=change_this_to_a_long_random_string
-JWT_EXPIRE=7d
-ADMIN_KEY=SMARTCARE_ADMIN_2024
-CLIENT_URL=http://localhost:5173
-NODE_ENV=development
-```
 
 ```bash
 npm install
@@ -50,18 +40,6 @@ Open **http://localhost:5173**
 
 ---
 
-## 🔑 Default Credentials (after seeding)
-
-| Role    | Email                   | Password    | Notes                    |
-|---------|-------------------------|-------------|--------------------------|
-| Admin   | admin@smartcare.com     | admin123    | Admin Key: `SMARTCARE_ADMIN_2024` |
-| Doctor  | sarah@smartcare.com     | doctor123   | Cardiology               |
-| Doctor  | rahim@smartcare.com     | doctor123   | Neurology                |
-| Doctor  | fatima@smartcare.com    | doctor123   | Pediatrics               |
-| Doctor  | arif@smartcare.com      | doctor123   | Orthopedics              |
-| Patient | karim@gmail.com         | patient123  |                          |
-| Patient | nasrin@gmail.com        | patient123  |                          |
-| Patient | rafiq@gmail.com         | patient123  |                          |
 
 ---
 
@@ -128,60 +106,6 @@ smartcare-hms/
                 └── Dashboard.jsx
 ```
 
----
-
-## 🌐 API Reference
-
-### Auth
-| Method | Endpoint                    | Auth   | Description               |
-|--------|-----------------------------|--------|---------------------------|
-| POST   | `/api/auth/register/:role`  | Public | Register (patient/doctor/admin) |
-| POST   | `/api/auth/login`           | Public | Login                     |
-| GET    | `/api/auth/me`              | JWT    | Get current user          |
-| PUT    | `/api/auth/profile`         | JWT    | Update profile            |
-
-### Doctors (Public)
-| Method | Endpoint                 | Auth         | Description          |
-|--------|--------------------------|--------------|----------------------|
-| GET    | `/api/doctors`           | Public       | List all doctors     |
-| GET    | `/api/doctors/:id`       | Public       | Get doctor by ID     |
-| PUT    | `/api/doctors/:id`       | Doctor only  | Update profile       |
-
-### Tests
-| Method | Endpoint           | Auth        | Description        |
-|--------|--------------------|-------------|---------------------|
-| GET    | `/api/tests`       | Public      | List all tests      |
-| GET    | `/api/tests/:id`   | Public      | Get test by ID      |
-| POST   | `/api/tests`       | Admin only  | Create test         |
-| PUT    | `/api/tests/:id`   | Admin only  | Update test         |
-| DELETE | `/api/tests/:id`   | Admin only  | Deactivate test     |
-
-### Appointments
-| Method | Endpoint                              | Auth          | Description              |
-|--------|---------------------------------------|---------------|--------------------------|
-| POST   | `/api/appointments/doctor`            | Patient only  | Book doctor appointment  |
-| POST   | `/api/appointments/test`              | Patient only  | Book test appointment    |
-| GET    | `/api/appointments/patient`           | Patient only  | Patient's appointments   |
-| GET    | `/api/appointments/doctor`            | Doctor only   | Doctor's appointments    |
-| GET    | `/api/appointments/test/:testId`      | Admin only    | Test appointments        |
-| PUT    | `/api/appointments/:id/status`        | JWT           | Update status            |
-| DELETE | `/api/appointments/:id`               | JWT           | Cancel appointment       |
-| GET    | `/api/appointments/available-slots`   | Public        | Get available time slots |
-
-**Available slots query params:** `?date=2024-12-20&type=doctor&id=DOCTOR_ID`
-
-### Admin
-| Method | Endpoint                             | Auth       | Description               |
-|--------|--------------------------------------|------------|---------------------------|
-| GET    | `/api/admin/stats`                   | Admin only | Dashboard stats           |
-| GET    | `/api/admin/doctors`                 | Admin only | All doctors               |
-| PUT    | `/api/admin/doctors/:id/verify`      | Admin only | Verify/unverify doctor    |
-| DELETE | `/api/admin/doctors/:id`             | Admin only | Remove doctor             |
-| GET    | `/api/admin/tests`                   | Admin only | All tests with counts     |
-| GET    | `/api/admin/tests/:testId/requests`  | Admin only | Appointments for a test   |
-| PUT    | `/api/admin/appointments/:id`        | Admin only | Update any appointment    |
-
----
 
 ## 🏗️ Key Features
 
@@ -223,19 +147,6 @@ smartcare-hms/
 2. Whitelist all IPs (`0.0.0.0/0`) for cloud deployment
 3. Copy connection string to `MONGODB_URI`
 
----
-
-## 📧 Email Notifications (Optional)
-
-Install nodemailer and configure in `.env`:
-```env
-EMAIL_HOST=smtp.gmail.com
-EMAIL_PORT=587
-EMAIL_USER=your@gmail.com
-EMAIL_PASS=your_app_password
-```
-
-Then add email sending in `appointmentController.js` after creating appointments.
 
 ---
 
